@@ -1,0 +1,227 @@
+Course Project: 
+
+Due date: April 23, 2025 
+
+Deliverable: 
+
+A program IN JUPYTER NOTEBOOK accompanied by all data required to run the program and a presentation explaining the program. 
+The program applies a machine learning or deep learning to a financial problem of interest. 
+The program applies model construction automation with an extensive pipeline. 
+The pipeline encompasses most modelling steps (from feature tuning to model choice to model evaluation) and includes bootstrapping and MonteCarlo test to avoid data snooping.
+
+Detailed list of deliverables (read the entire document, it is important):
+
+1. Python program IN JUPYTER NOTEBOOK & conda-list
+2. the input data to run the program (even if you download the data from YahooFinance, include the csv files)
+3. 30 (minimum) slide presentation explaining the program:
+include the following: 
+a. the link or title of the seed program (if any seed program was used)
+b. the link to the source or sources of the data
+c. list of improvements applied to the seed program (if a seed program was used)
+d. what inputs and target you used, especially:
+	i.specify the name of the target (call it target please), e.g. IBM (stock) or SPY (ETF) and visualization
+	ii. specify whether target is a price, a return or a category based on return (e.g. 1 vs 0 etc.)
+        iii. specify the frequency of the target (intra-day, daily, weekly, monthly etc.)
+	iiii. specify a list of inputs (use others in addition to OHLCV)
+	iiiii.specify the data link sources of the inputs and target
+e. what input processing you used (e.g. smoothing, wavelets (to be covered), feature tuning)
+f. what input selection or extraction you used (e.g. SelectPercentile, RFE, pca, custom etc) and WHY (e.g. not all models require pca)
+g. what custom indicators you used (e.g. a Put/Call ratio predictor programmed by you or a GEX for a stock programmed by you)
+h. what model you used (e.g. logistic regression, random forest etc.)
+i. what model parameters you searched
+j. how well did the model learn (e.g. train vs validation error graphs or box and whisker plots)
+k. what the train and test equity curves (plot) were
+	i. in multi-target* models equity curves should normalize the profits by the number of open positions as explained in class examples
+l. what the train and test metrics were (both statistical and financial metrics)
+m. the final white reality check and MonteCarlo test (p value) if required --explain the results
+	i. in multi-target* models, use alpha-lens evaluation (alpha, beta, information coefficient) --explain the results
+n. the name and surname of people on the team (friendly reminder!)
+o. 30 slides and accompanying detailed explanatory notes
+p. Specify which Option was selected
+
+*By multi-target we mean more than one asset being predicted
+
+You have the following options ordered in terms of creativity:
+
+Option 1:
+Explain and extend a case model in:
+Machine Learning and Data Science Blueprints for finance by Tatsat (see more info below, especially about an error)
+Usually these systems predict a single asset.
+Good cases in Tatsat's book to explain and extend:
+Chapter 5 Supervised learning: Regression
+case study 1: Stock price prediction 
+Data:
+You can use the same data or change it. 
+You can predict Bitcoin as target instead, for example.
+Number of Features:
+Introduce at least 5 new features, of the 5 new features, keep z.
+If Tatsat's original model had n features, your final model should have n+z features.
+Feature Creation:
+You can use Ta-lib, Wavelets, volatility related features etc.
+You can use Timothy Masters' programs (Single.exe, Multi.exe or both).
+You can create your own features, and not necessarily rely on OHLCV e.g. DIX, GEX etc. (see Indicators below).
+Alternatively, you can try using intraday data.
+See: Indicators\HourlyPricesForTatsatChapter5CaseStudy1.txt
+DIX and GEX are good for stocks and are relatively cheap to obtain:
+https://stocks.tradingvolatility.net/subscribe
+See Indicators\DIX_GEX_Technology_Stocks
+If you decide to predict Bitcoin as target,
+the following features seem to be relevant: 
+SPY, SP500 DIX, SP500 GEX, Gold, VIX, MOVE, hashing power, liquidity
+See: Indicators\Liquidity (liquidity is a long term indicator)
+‪See: Indicators\DIX_GEX_SPY  (for the SP500)
+https://squeezemetrics.com/monitor/dix  (also has the SP500 gex, both downloadable)
+There are many potentially useful Bitcoin indicators derived from on-chain analysis and crypto-exchange data, 
+but these indicators need to be bought: 
+Bitcoin funding rate, Bitcoin Py Cycle Top Indicator, high yield credit, open interest, coin days destroyed.
+You can transform any of these features with Ta-lib, Single.exe, Wavelets, ec.
+Feature Selection:
+You can use any available in Python e.g.  SelectKBest(k=5, score_func=f_regression) or for non-linear models, score_func=mutual_info_regression, etc. 
+You can use Timothy Masters' VarScreen.exe, which uses MonteCarlo replications internally.
+Models:
+Tatsat's case considers m models.
+Trading:
+Of the m models, select the best model and trade the predictions of the best model.
+Metrics:
+Tatsat's model evaluation criteria are not enough.
+Use financial metrics based on trading: ProfitFactor, CAGR, SharpeRatio.
+Feature Importance:
+Shap values. Discuss.
+Selection Bias:
+Use: White Reality Check on the testing data for evaluating the results.
+Use: MonteCarlo permutation (permuting the inputs, not the target) on the training data for evaluating the results
+If you use Timonthy Masters' programs (Single.exe VarScreen.exe etc.), provide the input and output files as evidence.
+See IMPORTANT below.
+
+IMPORTANT (7 points):
+
+1. Do not duplicate features. Tatsat sometimes uses classic technical analysis features (pp. 183-184: Bitcoin trading).
+
+
+2. Error in Tatsat: 
+in some programs (e.g. Bitcoin trading strategy, p. 189)
+Tatsat commits an error: 
+he calculates cumulative percent returns by applying cumsum().
+Cumsum() can only be applied to log returns.
+Cumprod() is applicable to (1+percent returns). 
+See: HomeworkPandas\Returns.xlsx for calculating log and percent cumulative returns.
+
+3. Tatsat uses log returns in some programs.
+In your homework, you used percent returns to do everything:
+equity curve plots, White reality check, CAGR, Sharpe Ratio etc.
+So as per HomeworkPandas\Returns.xlsx:
+If you use Tatsat's code and Tatsat is using log returns, 
+do not mix log and percent returns.
+In WhiteRealityCheckFor1.py comment out this line 
+(that converts incoming percent returns to log returns):
+The line is: "ser = np.log(ser + 1) #apply if the incoming series is a percent return series"
+since the incoming returns from Tatsat's code are log returns, this line is not needed
+Finally, to calculate the Sharpe Ratio within Tatsat's code, 
+first convert the trading system log returns to percent returns, and
+then apply the Sharpe Ratio formula to the percent returns.
+
+
+4. Tatsat's graphs are not necessarily trading equity curves e.g.:
+predicted vs actual graphs in p. 113
+Strategy returns vs actual graphs in p. 190
+Ignore these graphs.
+Make sure you include your own equity curve modeling. 
+like you did for homework.
+
+5. If you decide to work with a Tatsat model,
+construct your own trading system metrics:
+take note of the financial metrics during training and testing,
+just as you did for the homework models.
+
+6. Note that unlike our homework models which predict the opening price, 
+Tatsat's models usually predict the closing price, and
+you need to adjust for that, whichever your choice of target.
+
+7. Make sure you have enough training and testing data.
+If desired, use intra-day data,
+See HourlyPricesForTatsatChapter5CaseStudy1.txt
+
+
+Where to find Kaabar's materials?
+You can read Kaabar's book of backtests here (only for reading not downloading):
+https://drive.google.com/file/d/1RSuUSw18lOAPlIUgtnbAAn3ij5IZhiBQ/view?usp=sharing
+
+You can find other Kaabar material in Medium:
+https://kaabar-sofien.medium.com/
+Medium provides readers with free access to a limited number of articles so:
+Print out the contents of your articles before you run out of free articles.
+
+Kaabar code here:
+https://github.com/sofienkaabar
+
+Kaabar's books which are VERY inexpensive:
+https://www.amazon.com/Book-Trading-Strategies-Sofien-Kaabar/dp/B09919GQ22/ref=sr_1_1?dchild=1&qid=1635171343&refinements=p_27%3ASofien+Kaabar&s=books&sr=1-1
+https://www.amazon.com/Book-Back-tests-Objectively-Back-testing-demystifying/dp/B089CWQWF8/re=sr_1_6?crid=2I6YNR10WYKUH&dchild=1&keywords=sofien+kaabar&qid=1635172551&sprefix=sofien+kaabar%2Caps%2C89&sr=8-6
+https://www.amazon.com/gp/product/B09KNGG1CC/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1
+
+Are students allowed to explain and extend other programs?
+if you plan to do so, get in touch with us first.
+
+What seed code to use:
+You can use as seed code any code in Quercus for this class, 
+in Tatsat's book's github or 
+in Kaabar's books and articles.
+You should give credit for the seed code that you use to avoid plagiarism.
+You can also use your own code as seed code.
+
+
+Working from Kaggle or some similar platform, what to turn in?
+1. a copy of your ipynb
+2. a copy of all your data
+3. a link with the shared notebook where I can quickly run it
+4. your presentation 
+
+What data sources can I use?
+We will provide intraday data not available elsewhere.
+For crypto currency data you can use: 
+http://api.bitcoincharts.com/v1/csv/
+Free intraday currency data:
+https://www.histdata.com/download-free-forex-data/
+For ETF intraday data:
+https://drive.google.com/drive/folders/1YO2XlE4Z3M_pP1gk4QpjL5B28b_KEO6u?usp=sharing 
+WRDS intraday stock data:
+Indicators\WRDSHourlyDataProcessing
+
+
+WRDS is the best source for daily and intraday US stock price data.
+If you have access to data (especially currency related data) through a trading platform, you can use that data.
+As students at UofT, you have online access to a Bloomberg terminal via Rotman.
+Bloomberg has all of the data you might need, of excellent quality.
+
+
+INDICATORS
+What indicators can I use? 
+These are yours to choose but:
+If trading on a daily time-frame:
+It is VERY important to use indicators beyond price and volume (OHLCV)  and beyond Ta-lib based on OHLCV, otherwise 
+it is very difficult to predit a daily stock price with a simple model.
+We provide a list in: indicators.rar
+We suggest (the best):
+GEX, 
+DIX, 
+closing bid-closing ask, from WRDS: Home/Get Data/CRSP/Annual Update/Stock / Security Files/Daily Stock File
+Put-Call Ratio,
+Wavelets,
+funding_ratio (for Bitcoin)
+liquidity indicator.
+Sofien Kaabar has Python based indicators in his books
+https://www.amazon.com/Technical-Indicators-Python-Sofien-Kaabar/dp/B08WZL1PNL/ref=sr_1_2?crid=2I6YNR10WYKUH&dchild=1&keywords=sofien+kaabar&qid=1635172672&sprefix=sofien+kaabar%2Caps%2C89&sr=8-2
+https://www.amazon.com/gp/product/B09KNGG1CC/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1
+
+
+What platform do I use?
+Anaconda, Scikit-learn, Keras-Tensorflow (no Pytorch please)
+
+
+
+
+
+
+
+
+
