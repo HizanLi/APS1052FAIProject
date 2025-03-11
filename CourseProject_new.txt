@@ -15,29 +15,29 @@ Detailed list of deliverables (read the entire document, it is important):
 2. the input data to run the program (even if you download the data from YahooFinance, include the csv files)
 3. 30 (minimum) slide presentation explaining the program:
 include the following: 
-a. the link or title of the seed program (if any seed program was used)
-b. the link to the source or sources of the data
-c. list of improvements applied to the seed program (if a seed program was used)
-d. what inputs and target you used, especially:
-	i.specify the name of the target (call it target please), e.g. IBM (stock) or SPY (ETF) and visualization
-	ii. specify whether target is a price, a return or a category based on return (e.g. 1 vs 0 etc.)
-        iii. specify the frequency of the target (intra-day, daily, weekly, monthly etc.)
-	iiii. specify a list of inputs (use others in addition to OHLCV)
-	iiiii.specify the data link sources of the inputs and target
-e. what input processing you used (e.g. smoothing, wavelets (to be covered), feature tuning)
-f. what input selection or extraction you used (e.g. SelectPercentile, RFE, pca, custom etc) and WHY (e.g. not all models require pca)
-g. what custom indicators you used (e.g. a Put/Call ratio predictor programmed by you or a GEX for a stock programmed by you)
-h. what model you used (e.g. logistic regression, random forest etc.)
-i. what model parameters you searched
-j. how well did the model learn (e.g. train vs validation error graphs or box and whisker plots)
-k. what the train and test equity curves (plot) were
-	i. in multi-target* models equity curves should normalize the profits by the number of open positions as explained in class examples
-l. what the train and test metrics were (both statistical and financial metrics)
-m. the final white reality check and MonteCarlo test (p value) if required --explain the results
-	i. in multi-target* models, use alpha-lens evaluation (alpha, beta, information coefficient) --explain the results
-n. the name and surname of people on the team (friendly reminder!)
-o. 30 slides and accompanying detailed explanatory notes
-p. Specify which Option was selected
+	a. the link or title of the seed program (if any seed program was used)
+	b. the link to the source or sources of the data
+	c. list of improvements applied to the seed program (if a seed program was used)
+	d. what inputs and target you used, especially:
+		i.specify the name of the target (call it target please), e.g. IBM (stock) or SPY (ETF) and visualization
+		ii. specify whether target is a price, a return or a category based on return (e.g. 1 vs 0 etc.)
+			iii. specify the frequency of the target (intra-day, daily, weekly, monthly etc.)
+		iiii. specify a list of inputs (use others in addition to OHLCV)
+		iiiii.specify the data link sources of the inputs and target
+	e. what input processing you used (e.g. smoothing, wavelets (to be covered), feature tuning)
+	f. what input selection or extraction you used (e.g. SelectPercentile, RFE, pca, custom etc) and WHY (e.g. not all models require pca)
+	g. what custom indicators you used (e.g. a Put/Call ratio predictor programmed by you or a GEX for a stock programmed by you)
+	h. what model you used (e.g. logistic regression, random forest etc.)
+	i. what model parameters you searched
+	j. how well did the model learn (e.g. train vs validation error graphs or box and whisker plots)
+	k. what the train and test equity curves (plot) were
+		i. in multi-target* models equity curves should normalize the profits by the number of open positions as explained in class examples
+	l. what the train and test metrics were (both statistical and financial metrics)
+	m. the final white reality check and MonteCarlo test (p value) if required --explain the results
+		i. in multi-target* models, use alpha-lens evaluation (alpha, beta, information coefficient) --explain the results
+	n. the name and surname of people on the team (friendly reminder!)
+	o. 30 slides and accompanying detailed explanatory notes
+	p. Specify which Option was selected
 
 *By multi-target we mean more than one asset being predicted
 
